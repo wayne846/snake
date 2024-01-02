@@ -14,21 +14,34 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent), ui(new Ui::MainWin
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setBackgroundBrush(QBrush(OUT_BACKGROUND_COLOR));
 
+    text_died = scene->addText("YOU DIED", QFont("Arial", 50));
+    text_died->setPos(SCENE_WIDTH/2.0 - text_died->boundingRect().width()/2.0, SCENE_HEIGHT/2.0 - text_died->boundingRect().height()/2.0);
+    text_died->hide();
+
     //init snake
     snake = new Snake(this);
 
     //init timer
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
-    timer->start(100);
+    timer->start(130);
 
+    //init other value
+    isDead = false;
 }
 
 void MainWindow::update(){
-    snake->move();
+    if(isDead){
+        text_died->show();
+        return;
+    }
+    if(!snake->move()){
+        isDead = true;
+    }
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event){
+    if(isDead) return;
     switch(event->key()){
         case Qt::Key_Up:
         case Qt::Key_W:

@@ -45,6 +45,7 @@ class MainWindow : public QMainWindow
         Snake *snake;
         QTimer *timer;
 
-
+        bool isDead;
+        QGraphicsTextItem *text_died;
 };
 #endif // MAINWINDOW_H
