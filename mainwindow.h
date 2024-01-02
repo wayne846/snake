@@ -31,6 +31,7 @@ class MainWindow : public QMainWindow
         const int SCENE_HEIGHT = TILE_WIDTH * SCENE_HEIGHT_TILE_NUM;
 
         QGraphicsScene *scene;
+        QGraphicsTextItem *text_score;
 
         ~MainWindow();
 

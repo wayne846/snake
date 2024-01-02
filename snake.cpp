@@ -26,11 +26,11 @@ Snake::Snake(MainWindow *window)
         this->bodyMap[this->x][this->y] = newBody;
         if(i != 2) this->x += 1;
     }
-    this->length = 3;
 
     makeApple();
 
     //init other value
+    this->length = 0;
     canTurn = true;
 }
 
@@ -70,6 +70,7 @@ bool Snake::move(){
         delete(apple);
         makeApple();
         length++;
+        window->text_score->setPlainText(QString::number(length));
     }else{
         bodyQueue.pop();
         bodyMap[lastBody->x][lastBody->y] = NULL;
