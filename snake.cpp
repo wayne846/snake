@@ -2,6 +2,9 @@
 #include "mainwindow.h"
 #include <cmath>
 #include <QDebug>
+#include <stdlib.h>
+
+using namespace std;
 
 Snake::Snake(MainWindow *window)
 {
@@ -24,6 +27,8 @@ Snake::Snake(MainWindow *window)
         if(i != 2) this->x += 1;
     }
     this->length = 3;
+
+    makeApple();
 
     //init other value
     canTurn = true;
@@ -59,12 +64,19 @@ bool Snake::move(){
     SnakeBody *lastBody = bodyQueue.front();
     if(bodyMap[nextX][nextY] != NULL && bodyMap[nextX][nextY] != lastBody) return false;
 
-    //need edit when eat apple
-    bodyQueue.pop();
-    bodyMap[lastBody->x][lastBody->y] = NULL;
-    delete(lastBody);
-
     //now you can move
+    //eat apple
+    if(nextX == appleX && nextY == appleY){
+        delete(apple);
+        makeApple();
+        length++;
+    }else{
+        bodyQueue.pop();
+        bodyMap[lastBody->x][lastBody->y] = NULL;
+        delete(lastBody);
+    }
+
+
     //make new body
     x = nextX;
     y = nextY;
@@ -97,5 +109,17 @@ void Snake::turnDown(){
     if(dir == 0 || dir == 2 || !canTurn) return;
     dir = 2;
     canTurn = false;
+}
+
+void Snake::makeApple(){
+    srand(time(NULL));
+    appleX = rand() % window->SCENE_WIDTH_TILE_NUM;
+    appleY = rand() % window->SCENE_HEIGHT_TILE_NUM;
+    while(bodyMap[appleX][appleY] != NULL){
+        appleX = rand() % window->SCENE_WIDTH_TILE_NUM;
+        appleY = rand() % window->SCENE_HEIGHT_TILE_NUM;
+    }
+    apple = window->scene->addEllipse(QRect(0, 0, window->TILE_WIDTH, window->TILE_WIDTH), QPen(window->LINE_COLOR, 2.5), QBrush(window->APPLE_COLOR));
+    apple->setPos(window->TILE_WIDTH * appleX, window->TILE_WIDTH * appleY);
 }
 

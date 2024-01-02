@@ -28,8 +28,15 @@ class Snake
 
         bool canTurn;
 
+
+
         queue<SnakeBody*> bodyQueue;
         SnakeBody *bodyMap[28][20]; // [x][y]
+
+        void makeApple();
+        QGraphicsEllipseItem *apple;
+        int appleX;
+        int appleY;
 
 
 };
