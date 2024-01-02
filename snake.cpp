@@ -124,3 +124,11 @@ void Snake::makeApple(){
     apple->setPos(window->TILE_WIDTH * appleX, window->TILE_WIDTH * appleY);
 }
 
+Snake::~Snake(){
+    delete(apple);
+    while(!bodyQueue.empty()){
+        delete(bodyQueue.front());
+        bodyQueue.pop();
+    }
+}
+

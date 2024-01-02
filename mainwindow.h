@@ -41,6 +41,8 @@ class MainWindow : public QMainWindow
     private slots:
         void update();
 
+        void on_actionrestart_triggered();
+
     private:
         Ui::MainWindow *ui;
         Snake *snake;

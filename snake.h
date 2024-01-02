@@ -19,6 +19,8 @@ class Snake
         void turnUp();
         void turnDown();
 
+        ~Snake();
+
     private:
         MainWindow *window;
         int x;

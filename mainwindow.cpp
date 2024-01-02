@@ -70,3 +70,13 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
+
+void MainWindow::on_actionrestart_triggered()
+{
+    delete(snake);
+    snake = new Snake(this);
+    text_died->hide();
+    text_score->setPlainText("0");
+    isDead = false;
+}
+
